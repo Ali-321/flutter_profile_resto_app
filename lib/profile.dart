@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -39,11 +40,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                buildSocialIcon(Icons.email_outlined),
+                buildSocialIcon(Icons.email_outlined, _launchMailApp()),
                 const SizedBox(width: 12),
-                buildSocialIcon(Icons.map_outlined),
+                buildSocialIcon(Icons.map_outlined, () {}),
                 const SizedBox(width: 12),
-                buildSocialIcon(Icons.phone),
+                buildSocialIcon(Icons.phone, () {}),
               ],
             ),
             const SizedBox(height: 10),
@@ -55,7 +56,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     ));
   }
 
-  Widget buildSocialIcon(IconData icon) => Container(
+  Widget buildSocialIcon(IconData icon, void onPressed) => Container(
         height: 50,
         width: 50,
         decoration: BoxDecoration(
@@ -65,7 +66,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           clipBehavior: Clip.hardEdge,
           color: const Color.fromARGB(255, 45, 40, 49),
           child: InkWell(
-            onTap: () {},
+            onTap: () => onPressed,
             child: Center(
                 child: Icon(icon,
                     size: 32, color: const Color.fromARGB(255, 65, 249, 215))),
@@ -145,4 +146,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ],
         ),
       );
+
+  void _launchMailApp() async {
+    const url = 'mailto:gmail.com';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 }
