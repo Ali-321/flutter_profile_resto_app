@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:maps_launcher/maps_launcher.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:mailto/mailto.dart';
 
@@ -46,9 +47,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               children: [
                 buildSocialIcon(Icons.email_outlined, _launchMailApp),
                 const SizedBox(width: 12),
-                buildSocialIcon(Icons.map_outlined, () {}),
+                buildSocialIcon(Icons.map_outlined, _mapsLaucher),
                 const SizedBox(width: 12),
-                buildSocialIcon(Icons.phone, () {}),
+                buildSocialIcon(Icons.phone, _makePhoneCall),
               ],
             ),
             const SizedBox(height: 10),
@@ -157,5 +158,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
       subject: 'Tanya Seputar resto',
     );
     await launch('$mailtoLink');
+  }
+
+  _makePhoneCall() async {
+    final Uri launchUri = Uri(
+      scheme: 'tel',
+      path: "+62241234123",
+    );
+    await launchUrl(launchUri);
+  }
+
+  _mapsLaucher() {
+    MapsLauncher.launchCoordinates(-6.966667, 110.416667, 'Udinus');
+    child:
+    Text('LAUNCH COORDINATES');
   }
 }
