@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:mailto/mailto.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -9,6 +10,9 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  final String toEmail = 'rmmakan@gmail.com';
+  final String subject = 'Tanya Seputar rumah makan';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +44,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                buildSocialIcon(Icons.email_outlined, _launchMailApp()),
+                buildSocialIcon(Icons.email_outlined, _launchMailApp),
                 const SizedBox(width: 12),
                 buildSocialIcon(Icons.map_outlined, () {}),
                 const SizedBox(width: 12),
@@ -56,7 +60,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     ));
   }
 
-  Widget buildSocialIcon(IconData icon, void onPressed) => Container(
+  Widget buildSocialIcon(IconData icon, Function onPressed) => Container(
         height: 50,
         width: 50,
         decoration: BoxDecoration(
@@ -66,7 +70,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           clipBehavior: Clip.hardEdge,
           color: const Color.fromARGB(255, 45, 40, 49),
           child: InkWell(
-            onTap: () => onPressed,
+            onTap: () => {onPressed()},
             child: Center(
                 child: Icon(icon,
                     size: 32, color: const Color.fromARGB(255, 65, 249, 215))),
@@ -147,12 +151,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
       );
 
-  void _launchMailApp() async {
-    const url = 'mailto:gmail.com';
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
+  _launchMailApp() async {
+    final mailtoLink = Mailto(
+      to: ['rmmakan.sedaprasa@gmail.com'],
+      subject: 'Tanya Seputar resto',
+    );
+    await launch('$mailtoLink');
   }
 }
