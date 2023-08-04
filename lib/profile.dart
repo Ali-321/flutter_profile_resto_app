@@ -54,7 +54,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             const SizedBox(height: 10),
             const Divider(thickness: 1),
-            Content(),
+            content(),
           ],
         ),
       ],
@@ -78,8 +78,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ),
       );
-  Widget Content() => Container(
-        padding: EdgeInsets.symmetric(horizontal: 55),
+  Widget content() => Container(
+        padding: const EdgeInsets.symmetric(horizontal: 55),
         child: const Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -170,7 +170,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   _mapsLaucher() {
     MapsLauncher.launchCoordinates(-6.966667, 110.416667, 'Udinus');
-    child:
-    Text('LAUNCH COORDINATES');
+    const Text('LAUNCH COORDINATES');
   }
 }
